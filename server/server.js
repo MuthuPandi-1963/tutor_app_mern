@@ -1,11 +1,23 @@
 import express from 'express'
 import {config} from 'dotenv'
 import DBConfig from './db/db.config.js'
-
+import cookieParser from 'cookie-parser';
+import AuthRoutes from './routes/authRoutes.js';
+import cors from 'cors'
 config()
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(express.json())
+const corsOptions = {
+    origin: process.env.FRONTEND_URL, // frontend URL (adjust for production)
+    credentials: true, // to allow cookies/token headers
+  };
+  
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
+app.use("/api",AuthRoutes)
 app.get("/",(req,res)=>{
     res.status(200)
     .json({
