@@ -13,3 +13,8 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+@layer utilities {
+  .shadow-top-sky {
+    box-shadow: 0 -4px 6px -1px rgb(56 189 248 / 0.5); /* sky-400 */
+  }
+}

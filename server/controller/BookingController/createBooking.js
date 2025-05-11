@@ -10,7 +10,7 @@ const timeToMinutes = (timeStr) => {
 // Create new booking (Student)
 export const createBooking = async (req, res) => {
   try {
-    const { tutorId, dateTime, duration } = req.body;
+    const { tutorId, dateTime, duration ,subject } = req.body;
     const studentId = req.user.id;
 
     // 1. Validate inputs

@@ -14,7 +14,7 @@ const FooterBg = {
 
 const Footer = () => {
   return (
-    <div style={FooterBg} className="rounded-t-3xl">
+    <div style={FooterBg} className=" shadow-top-sky rounded-t-3xl shadow-lg shadow-sky-400">
       <div className="bg-primary/5">
       <div className="container">
         <div className="grid md:grid-cols-4 md:gap-4 py-5 border-t-2 border-gray-300/10 text-black ">

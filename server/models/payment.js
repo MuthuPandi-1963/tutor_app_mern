@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const paymentSchema = new Schema({
-  booking: { type: Schema.Types.ObjectId, ref: 'Booking', required: true },
+  booking: { type: Schema.Types.ObjectId, ref: 'booking', required: true },
   amount: { type: Number, required: true },
   method: { type: String, enum: ['stripe', 'paypal'], required: true },
   transactionId: { type: String, required: true },
@@ -13,5 +13,5 @@ const paymentSchema = new Schema({
   tutorEarnings: { type: Number }
 }, { timestamps: true });
 
-const PaymentModel = mongoose.model("Payment", paymentSchema);
+const PaymentModel = mongoose.model("payment", paymentSchema);
 export default PaymentModel;

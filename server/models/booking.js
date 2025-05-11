@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 
 const bookingSchema = new Schema({
-  student: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  tutor: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  student: { type: Schema.Types.ObjectId, ref: 'user', required: true },
+  tutor: { type: Schema.Types.ObjectId, ref: 'user', required: true },
   dateTime: { type: Date, required: true },
   duration: { type: Number, required: true },
   status: { 
@@ -14,5 +14,5 @@ const bookingSchema = new Schema({
   paymentStatus: { type: Boolean, default: false }
 }, { timestamps: true });
 
-const BookingModel = mongoose.model("Booking", bookingSchema);
+const BookingModel = mongoose.model("booking", bookingSchema);
 export default BookingModel;
