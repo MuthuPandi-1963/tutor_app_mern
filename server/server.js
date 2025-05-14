@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, // frontend URL (adjust for production)
+    origin: [process.env.FRONTEND_URL,"https://tutor-app-mern.vercel.app"], // frontend URL (adjust for production)
     credentials: true, // to allow cookies/token headers
   };
   
