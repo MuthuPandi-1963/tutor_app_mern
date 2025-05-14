@@ -1,111 +1,99 @@
-import React from "react";
-import { delay, motion } from "framer-motion";
-import { FaComputer } from "react-icons/fa6";
-import { FaBook } from "react-icons/fa";
-
-const subjectList = [
-  {
-    id: 1,
-    name: "Engineering",
-    icon: <FaBook />,
-    color: "#0063ff",
-    delay: 0.2,
-  },
-  {
-    id: 2,
-    name: "English",
-    icon: <FaBook />,
-    color: "#00c986",
-    delay: 0.3,
-  },
-  {
-    id: 3,
-    name: "Programming",
-    icon: <FaComputer />,
-    color: "#922aee",
-    delay: 0.4,
-  },
-  {
-    id: 4,
-    name: "Science",
-    icon: <FaBook />,
-    color: "#ea7516",
-    delay: 0.5,
-  },
-  {
-    id: 5,
-    name: "History",
-    icon: <FaBook />,
-    color: "#075267",
-    delay: 0.6,
-  },
-  {
-    id: 6,
-    name: "Psychology",
-    icon: <FaBook />,
-    color: "#986d1d",
-    delay: 0.7,
-  },
-  {
-    id: 7,
-    name: "Web design",
-    icon: <FaComputer />,
-    color: "#b93838",
-    delay: 0.8,
-  },
-  {
-    id: 8,
-    name: "See all",
-    icon: <FaBook />,
-    color: "#464646",
-    delay: 0.9,
-  },
-];
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
+import GetSubjectsThunk from "../../store/Thunks/subjects/GetSubjectsThunk";
+import { FaBook, FaComputer } from "react-icons/fa6";
 
 const SubjectCard = () => {
-  return (
-    <>
-      <div className="container py-14 md:py-24">
-        {/* header section */}
-        <div className="space-y-4 p-6 text-center max-w-[600px] mx-auto mb-5">
-          <h1 className="uppercase font-semibold text-orange-600">
-            Our tutor subjects
-          </h1>
-          <p className="font-semibold text-3xl">
-            Find Online Tutor in Any Subject{" "}
-          </p>
-        </div>
-        {/* cards section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 ">
-          {subjectList.map((subject) => {
-            return (
-              <motion.div
-                key={subject.id}
-                initial={{ opacity: 0, x: -200 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  delay: subject.delay,
-                }}
-                className="border rounded-lg shadow-md border-secondary/20 p-4 flex justify-center items-center gap-4 hover:scale-105 duration-300 hover:shadow-2xl cursor-pointer "
-              >
-                <div
-                  style={{
-                    color: subject.color,
-                    backgroundColor: subject.color + "30",
-                  }}
-                  className="w-10 h-10 rounded-md flex items-center justify-center "
-                >
-                  {subject.icon}
-                </div>
-                <p>{subject.name}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+  const [subjects, setSubjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await dispatch(GetSubjectsThunk());
+        setSubjects(response.payload.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch subjects", err);
+        setError("Failed to load subjects");
+        setLoading(false);
+      }
+    };
+    fetchSubjects();
+  }, [dispatch]);
+
+  const getColor = (index) => {
+    const colors = [
+      "#0063ff", "#00c986", "#922aee", "#ea7516", "#075267",
+      "#986d1d", "#b93838", "#464646"
+    ];
+    return colors[index % colors.length];
+  };
+
+  const getIcon = (subjectName = "") => {
+    const keywords = subjectName.toLowerCase();
+    if (keywords.includes("program") || keywords.includes("web")) return <FaComputer />;
+    return <FaBook />;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh] text-xl text-blue-500">
+        Loading Subjects...
       </div>
-    </> 
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-600 font-semibold py-10">
+        {error}
+      </div>
+    );
+  }
+
+  return (
+    <div className="container py-14 md:py-24">
+      {/* header */}
+      <div className="space-y-4 p-6 text-center max-w-[600px] mx-auto mb-5">
+        <h1 className="uppercase font-semibold text-orange-600">Our Tutor Subjects</h1>
+        <p className="font-semibold text-3xl">Find Online Tutor in Any Subject</p>
+      </div>
+
+      {/* subject cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {subjects.map((subject, index) => {
+          const color = getColor(index);
+          return (
+            <motion.div
+              key={subject._id}
+              initial={{ opacity: 0, x: -200 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                delay: 0.1 * (index + 1),
+              }}
+              className="border rounded-lg shadow-md border-secondary/20 p-4 flex justify-center items-center gap-4 hover:scale-105 duration-300 hover:shadow-2xl cursor-pointer"
+            >
+              <div
+                style={{
+                  color: color,
+                  backgroundColor: color + "30",
+                }}
+                className="w-10 h-10 rounded-md flex items-center justify-center"
+              >
+                {getIcon(subject.name)}
+              </div>
+              <p>{subject.name}</p>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

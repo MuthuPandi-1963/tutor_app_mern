@@ -5,6 +5,7 @@ const bookingSchema = new Schema({
   tutor: { type: Schema.Types.ObjectId, ref: 'user', required: true },
   dateTime: { type: Date, required: true },
   duration: { type: Number, required: true },
+  subject : {type : Schema.Types.ObjectId,ref : "subject" ,required : true},
   status: { 
     type: String, 
     enum: ['pending', 'accepted', 'declined', 'completed'], 

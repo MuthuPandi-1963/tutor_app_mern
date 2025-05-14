@@ -1,10 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import axiosInstance from '../../utility/axiosInstance'
+import axiosInstance from '../../../utility/axiosInstance'
 
-const VerifyOTPThunk = createAsyncThunk("verify_otp",
+const RegisterThunk = createAsyncThunk("register",
     async (formdata,{rejectWithValue})=>{
         try{
-            const response = await axiosInstance.post("/verify_otp",formdata)
+            const response = await axiosInstance.post("/register",formdata)
             console.log(response);
             return response.data
             
@@ -13,4 +13,4 @@ const VerifyOTPThunk = createAsyncThunk("verify_otp",
         }
 })
 
-export default VerifyOTPThunk;
+export default RegisterThunk;

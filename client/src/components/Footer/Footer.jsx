@@ -134,7 +134,7 @@ const Footer = () => {
           <div className="text-center py-6 border-t-2 border-gray-800/20">
             <span className="text-sm text-black/60 ">
               {" "}
-              ©copyright 2024 E-Tutor. All rights reserved
+              ©copyright 2025 E-Tutor. All rights reserved
             </span>
           </div>
         </div>

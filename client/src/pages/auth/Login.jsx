@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { SlideRight } from "../../utility/animation";
 import HeroImg from "../../assets/hero.png";
-import LoginThunk from "../../store/Thunks/LoginThunk";
+import LoginThunk from "../../store/Thunks/Auth/LoginThunk";
 import { useDispatch } from "react-redux";
 
 const Login = () => {

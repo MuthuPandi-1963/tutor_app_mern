@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import axiosInstance from '../../utility/axiosInstance'
+import axiosInstance from '../../../utility/axiosInstance'
 
 const LoginThunk = createAsyncThunk("login",
     async (formdata,{rejectWithValue})=>{

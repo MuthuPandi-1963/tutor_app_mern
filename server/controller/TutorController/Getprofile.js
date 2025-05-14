@@ -8,7 +8,7 @@ export const getTutorProfile = async (req, res) => {
             .populate("subjects", "name description")
             .exec();
 
-        if (!tutor || tutor.role !== "tutor") {
+        if (!tutor) {
             return res.status(404).json({
                 success: false,
                 message: "Tutor not found",

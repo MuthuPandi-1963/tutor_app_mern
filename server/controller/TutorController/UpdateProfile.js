@@ -1,36 +1,42 @@
 import UserModel from "../../models/user.js";
 
+
 export const updateTutorProfile = async (req, res) => {
-    try {
-        const { id } = req.params;
+  try {
+    const tutorId = req.params.id;
+    console.log(req.body);
+    
+    const { name, bio, qualifications, subjects, availability,hourlyRate ,profileUrl } = req.body;
 
-        const updatedTutor = await UserModel.findByIdAndUpdate(
-            id,
-            {
-                ...req.body
-            },
-            { new: true }
-        );
+    const updateFields = {};
 
-        if (!updatedTutor || updatedTutor.role !== "tutor") {
-            return res.status(404).json({
-                success: false,
-                message: "Tutor not found",
-                data: {}
-            });
-        }
+    if (name) updateFields.name = name;
+    if (bio) updateFields.bio = bio;
+    if (qualifications) updateFields.qualifications = qualifications;
+    if(hourlyRate) updateFields.hourlyRate = hourlyRate
+    if(profileUrl) updateFields.profileUrl = profileUrl
 
-        res.status(200).json({
-            success: true,
-            message: "Tutor profile updated successfully",
-            data: updatedTutor
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: err.message,
-            data: {}
-        });
+    if (Array.isArray(subjects)) {
+      updateFields.subjects = subjects; // assume subjects are strings (names)
     }
+
+    if (Array.isArray(availability)) {
+      updateFields.availability = availability;
+    }
+
+    const updatedTutor = await UserModel.findByIdAndUpdate(
+      tutorId,
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (!updatedTutor) {
+      return res.status(404).json({ message: "Tutor not found" });
+    }
+
+    res.status(200).json({ message: "Tutor profile updated", tutor: updatedTutor });
+  } catch (error) {
+    console.error("Error updating tutor profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };

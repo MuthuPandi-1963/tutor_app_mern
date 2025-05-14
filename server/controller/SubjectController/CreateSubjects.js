@@ -2,8 +2,10 @@ import SubjectModel from "../../models/subject.js";
 
 const CreateSubjects = async (req,res)=>{
     try{
+        console.log(req.body);
+        
         const {name,description,material,image} = req.body
-        if(!name || !description || !image){
+        if(!name || !description){
             return res.status(404)
             .json({
                 success : false,

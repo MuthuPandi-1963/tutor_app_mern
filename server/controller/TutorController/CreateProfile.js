@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import UserModel from "../../models/user.js";
 
 // ✅ Create Tutor Profile
@@ -24,7 +25,9 @@ export const createTutorProfile = async (req, res) => {
         // Update tutor-specific fields
         user.bio = bio || user.bio;
         user.qualifications = qualifications || user.qualifications;
-        user.subjects = subjects || user.subjects;
+        if(subjects){
+            const subjects = req.body.subjects.map(id => new mongoose.Types.ObjectId(id));
+        }
         user.hourlyRate = hourlyRate || user.hourlyRate;
         user.availability = availability || user.availability;
 

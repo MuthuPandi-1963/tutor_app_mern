@@ -5,8 +5,8 @@
     import { SlideRight } from "../../utility/animation";
     import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import RegisterThunk from "../../store/Thunks/RegisterThunk";
-import VerifyOTPThunk from "../../store/Thunks/VerifyOTPThunk";
+import RegisterThunk from "../../store/Thunks/Auth/RegisterThunk";
+import VerifyOTPThunk from "../../store/Thunks/Auth/VerifyOTPThunk";
 
     const Register = () => {
         const dispatch = useDispatch()
