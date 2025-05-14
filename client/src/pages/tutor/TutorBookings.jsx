@@ -53,7 +53,7 @@ const TutorBookings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 md:p-8 p-2 ">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Manage Bookings</h1>

@@ -30,7 +30,7 @@ const Navbar = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <div className="container flex justify-between items-center py-6 bg-primary/10">
+        <div className="flex w-full mx-auto px-6 justify-between items-center py-2 bg-white/100 shadow-lg shadow-blue-500 fixed z-50  top-0">
           {/* Logo */}
           <div className="text-2xl flex items-center gap-2 font-bold">
             <MdComputer className="text-3xl text-secondary" />
@@ -78,7 +78,7 @@ const Navbar = () => {
       </motion.nav>
 
       {/* Mobile Sidebar */}
-      <ResponsiveMenu isOpen={isOpen} menuItems={menuItems} isAuthenticated={isAuthenticated} role={role} />
+      <ResponsiveMenu isOpen={isOpen} menuItems={menuItems} isAuthenticated={isAuthenticated} role={role} setIsOpen={setIsOpen} />
     </>
   );
 };

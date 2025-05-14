@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import GetProfileThunk from '../Thunks/Tutor/Profile/GetProfileThunk'
 import GetAllTutorsThunk from '../Thunks/Tutor/Profile/GetAllTutorsThunk';
 import UpdateTutorProfileThunk from '../Thunks/Tutor/Profile/UpdateTutorProfileThunk';
+import GetStudentsByTutor from '../Thunks/Tutor/Profile/GetStudentsByTutor';
 
 const initialState = {
     data: {},
@@ -43,7 +44,13 @@ const ProfileSlice = createSlice({
         });
         builder.addCase(UpdateTutorProfileThunk.fulfilled, HandleEvent);
         builder.addCase(UpdateTutorProfileThunk.rejected, HandleEvent);
+        builder.addCase(GetStudentsByTutor.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(GetStudentsByTutor.fulfilled, HandleEvent);
+        builder.addCase(GetStudentsByTutor.rejected, HandleEvent);
     }   
+
 });
 
 const ProfileReducers = ProfileSlice.reducer;

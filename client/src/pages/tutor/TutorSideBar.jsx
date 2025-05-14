@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LogoutThunk from '../../store/Thunks/Auth/LogoutThunk';
 
 const Sidebar = () => {
@@ -10,16 +10,17 @@ const Sidebar = () => {
     { name: 'Bookings', path: '/tutor/bookings' },
     { name: 'Earnings', path: '/tutor/earnings' },
   ];
-  
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleLogout = () => {
     localStorage.clear();
     dispatch(LogoutThunk())
-    <nav
+    navigate("/")
+    
   }
 
   return (
-    <aside className=" top-[70px] min-h-[600px] left-0  w-64  border-gray-900  z-40 flex flex-col justify-between p-6">
+    <aside className=" top-[70px] min-h-[600px] left-0  w-64  border-gray-900  bg-blue-800  z-40 flex flex-col justify-between p-6">
       <div>
         <h2 className="text-2xl font-bold text-yellow-500 mb-6 z-10">Tutor Panel</h2>
         <nav className="space-y-2">
@@ -30,8 +31,8 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `block px-4 py-2 rounded-md text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-yellow-500 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-yellow-100 hover:text-yellow-700'
+                    ? 'bg-yellow-400 text-blue-900'
+                : 'text-blue-200 hover:bg-blue-400'
                 }`
               }
             >

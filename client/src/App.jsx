@@ -23,6 +23,12 @@ import TutorList from "./pages/student/GetAllTutors";
 import AboutUs from "./components/About";
 import ContactPage from "./components/ContactUs";
 import Booking from "./pages/student/Booking";
+import MyChildren from "./pages/parent/Mychildren";
+import ChildrenSection from "./pages/parent/ChildrenSection";
+import DashboardHome from "./pages/parent/DashboardHome";
+import ParentDashboard from "./pages/parent/ParentDashboard";
+import ParentBookings from "./pages/parent/ParentBookings";
+import Error404 from "./utility/Error404";
 
 const App = () => {
   const userData = useSelector((state) => state.auth);
@@ -55,7 +61,9 @@ const App = () => {
             <Route path="bookings" element={<TutorBookings />} />
             <Route path="earnings" element={<TutorEarnings />} />
           </Route>
+
           <Route path="tutors" element={<TutorList />} />
+
           <Route path="/student" element={<StudentLayout />}>
             <Route path="dashboard" element={<StudentDashboard />} />
             <Route path="classes" element={<StudentClasses />} />
@@ -63,6 +71,16 @@ const App = () => {
             <Route path="profile" element={<StudentProfile />} />
             <Route path="bookings/:id" element={<Booking/>}/>
           </Route>
+
+            <Route path="parent/link/children" element={<MyChildren/>} />
+            <Route path="/parent" element={<ParentDashboard />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="dashboard" element={<DashboardHome />} />
+            <Route path="children" element={<ChildrenSection />} />
+            <Route path="bookings" element={<ParentBookings />} />
+            {/* Add other routes */}
+          </Route>
+            <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
     </>

@@ -3,6 +3,7 @@ import HeroImg from "../../assets/hero.png";
 import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { SlideRight } from "../../utility/animation";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -43,13 +44,13 @@ const Hero = () => {
               animate="visible"
               className="flex gap-8 justify-center md:justify-start !mt-8 items-center"
             >
-              <button className="primary-btn">Get Started</button>
-              <button className="flex justify-self-end items-center gap-2 font-semibold">
+              <Link to={"/tutors"} className="primary-btn">Get Started</Link>
+              <Link to={"/about"} className="flex justify-self-end items-center gap-2 font-semibold">
                 <span className="w-10 h-10 bg-secondary/15 rounded-full flex justify-center items-center">
                   <FaPlay className="text-secondary " />
                 </span>
                 See how it works
-              </button>
+              </Link>
             </motion.div>
           </div>
         </div>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const ResponsiveMenu = ({ isOpen, menuItems, isAuthenticated, role }) => {
+const ResponsiveMenu = ({ isOpen, menuItems, isAuthenticated, role ,setIsOpen}) => {
+  const path = useLocation()
+  useEffect(()=>{
+    setIsOpen(prev=>prev==true ? false : prev)
+  },[path])
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -17,7 +21,7 @@ const ResponsiveMenu = ({ isOpen, menuItems, isAuthenticated, role }) => {
             <ul className="flex flex-col items-center justify-center gap-5">
               {menuItems.map((item) => (
                 <li key={item.id}>
-                  <Link to={item.url} className="hover:underline">
+                  <Link to={item.url} className="hover:underline" >
                     {item.title}
                   </Link>
                 </li>

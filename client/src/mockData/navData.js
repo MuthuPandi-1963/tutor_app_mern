@@ -15,7 +15,7 @@ const getNavbarMenu = (role) => {
 
   const parentMenu = [
     { id: 8, title: "My Children", url: "/parent/children" },
-    { id: 9, title: "Activity", url: "/parent/activities" },
+    { id: 9, title: "Activity", url: "/parent/dashboard" },
   ];
 
   const tutorMenu = [
@@ -31,7 +31,7 @@ const getNavbarMenu = (role) => {
     case "tutor":
       return [...commonMenu, ...tutorMenu,...lastMenu];
     default:
-      return [...commonMenu];
+      return [...commonMenu,...lastMenu];
   }
 };
 export default getNavbarMenu;

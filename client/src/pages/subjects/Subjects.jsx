@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import GetSubjectsThunk from "../../store/Thunks/subjects/GetSubjectsThunk";
-import { FaBook, FaComputer } from "react-icons/fa6";
+import { FaBook, FaComputer, FaCode, FaCalculator } from "react-icons/fa6";
 
 const SubjectsList = () => {
   const [subjects, setSubjects] = useState([]);
@@ -24,22 +24,19 @@ const SubjectsList = () => {
     };
     fetchSubjects();
   }, [dispatch]);
+  
 
-  const getColor = (index) => {
-    const colors = [
-      "#0063ff", "#00c986", "#922aee", "#ea7516", "#075267",
-      "#986d1d", "#b93838", "#464646"
-    ];
-    return colors[index % colors.length];
-  };
+  // ... existing state and dispatch logic ...
 
   const getIcon = (subjectName = "") => {
     const keywords = subjectName.toLowerCase();
-    if (keywords.includes("program") || keywords.includes("web")) return <FaComputer />;
-    return <FaBook />;
+    if (keywords.includes("program") || keywords.includes("web")) return <FaComputer className="text-xl" />;
+    if (keywords.includes("math")) return <FaCalculator className="text-xl" />;
+    if (keywords.includes("code")) return <FaCode className="text-xl" />;
+    return <FaBook className="text-xl" />;
   };
 
-  if (loading) {
+ if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[50vh] text-xl text-blue-500">
         Loading Subjects...
@@ -56,47 +53,70 @@ const SubjectsList = () => {
   }
 
   return (
-    <div className="subject-container my-10 px-4">
-      <h2 className="text-5xl font-semibold mb-6 text-center text-yellow-500">
-        Available Subjects
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {subjects.map((subject, index) => {
-          const color = getColor(index);
-          return (
-            <motion.div
-              key={subject._id}
-              initial={{ opacity: 0, x: -200 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 100,
-                delay: 0.1 * (index + 1),
-              }}
-              className="relative bg-gradient-to-br from-purple-500 to-blue-600 p-2 rounded-xl shadow-xl transform transition-transform duration-300 hover:scale-105"
-            >
+    <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-yellow-500 bg-clip-text text-transparent"
+      >
+        Explore Subjects
+      </motion.h2>
+
+      <div className="grid mx-auto w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap gap-12">
+        {subjects.map((subject, index) => (
+          <motion.div
+            key={subject._id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              delay: index * 0.05,
+            }}
+            whileHover={{ y: -5 }}
+            className="group bg-blue-100 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden w-80"
+          >
+            <div className="relative">
               <img
                 src={subject.image}
                 alt={subject.name}
-                className="w-full h-80 object-cover rounded-md mb-4"
+                className="w-full h-80 object-cover object-center"
               />
-              <h3 className="font-semibold text-xl text-white mb-2">{subject.name}</h3>
-              <p className="text-white text-sm">{subject.description}</p>
-              <div
-                style={{
-                  color: color,
-                  backgroundColor: color + "30",
-                }}
-                className="w-10 h-10 rounded-md flex items-center justify-center absolute top-4 right-4"
-              >
-                {getIcon(subject.name)}
+              <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
+                <span className={`text-${getColorClass(index)}-600`}>
+                  {getIcon(subject.name)}
+                </span>
               </div>
-            </motion.div>
-          );
-        })}
+            </div>
+
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {subject.name}
+              </h3>
+              <p className="text-gray-600 text-sm line-clamp-3">
+                {subject.description}
+              </p>
+              
+              <div className="mt-4 flex items-center justify-between">
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-${getColorClass(index)}-100 text-${getColorClass(index)}-800`}>
+                  {subject.category || "General"}
+                </span>
+                <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                  View Courses →
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   );
+};
+
+// Helper function for Tailwind class-safe colors
+const getColorClass = (index) => {
+  const colors = ["blue", "green", "purple", "orange", "teal", "yellow", "red", "gray"];
+  return colors[index % colors.length];
 };
 
 export default SubjectsList;

@@ -1,8 +1,20 @@
+import { useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux'
+import GetStudentsByTutor from '../../store/Thunks/Tutor/Profile/GetStudentsByTutor';
 const MyStudents = () =>{
-  const students = [
-    { name: "John Doe", subject: "Math", progress: "80%" },
-    { name: "Jane Smith", subject: "English", progress: "95%" },
-  ];
+  const [students,setStudents] = useState([])
+  const dispatch = useDispatch()
+  const {data} = useSelector(state=>state.auth)
+
+  useEffect(()=>{
+    const fetchStudents = async ()=>{
+      const res = await dispatch(GetStudentsByTutor(data.id))
+      setStudents(res.payload.data)
+    }
+    fetchStudents()
+    console.log(students);
+    
+  },[])
 
   return (
     <div className="p-6">
@@ -20,8 +32,8 @@ const MyStudents = () =>{
             {students.map((student, idx) => (
               <tr key={idx} className="border-b">
                 <td className="px-4 py-2">{student.name}</td>
-                <td className="px-4 py-2">{student.subject}</td>
-                <td className="px-4 py-2">{student.progress}</td>
+                <td className="px-4 py-2">{student.email}</td>
+                <td className="px-4 py-2"><img src={student.profileUrl} alt="" /></td>
               </tr>
             ))}
           </tbody>
@@ -33,5 +45,4 @@ const MyStudents = () =>{
 
   export default MyStudents;
   
-  // Repeat similar structure for Bookings.jsx and Earnings.jsx
   

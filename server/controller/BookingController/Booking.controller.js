@@ -60,8 +60,11 @@ export const getStudentBookings = async (req, res) => {
   try {
     const { studentId } = req.params;
     const bookings = await BookingModel.find({ student: studentId })
-      .populate("tutor", "name email")
-      .populate("subject", "name");
+    
+      .populate("tutor", "name email ")
+      .populate("subject", "name description image");
+      console.log(bookings);
+      
     return res.status(200).json(bookings);
   } catch (error) {
     console.error(error);
