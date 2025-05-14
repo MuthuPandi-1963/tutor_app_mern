@@ -1,5 +1,5 @@
+// "this is the App Component"
 import React, { useEffect } from "react";
-
 import Register from "./pages/auth/Register";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home";
